@@ -40,9 +40,9 @@ BetterTouchTool will compile and load the plugin. Grant Accessibility permission
 
 ### 3. Add the MIDI controls
 
-After installing the plugin, [click here to import the complete preset into BetterTouchTool](btt://importviaurl/https://github.com/wjhrdy/OrthoTextNavigation/raw/main/OrthoTextNavigation.bttpreset) and approve the import. The preset assigns the three MIDI controls to the plugin operations automatically.
+Download [`OrthoTextNavigation.bttpreset`](https://github.com/wjhrdy/OrthoTextNavigation/blob/main/OrthoTextNavigation.bttpreset), then in BetterTouchTool choose **Presets → Import Preset** and select the downloaded file. The preset assigns the three MIDI controls to the plugin operations automatically.
 
-If the link does not open BetterTouchTool, download `OrthoTextNavigation.bttpreset` and open it with BetterTouchTool. You can also import `OrthoNavigation.json` with BetterTouchTool’s AI Config Assistant, or create the three MIDI triggers manually and assign these plugin operations:
+The `btt://` one-click import link is not available in the Setapp build of BetterTouchTool because that build does not register the URL scheme. If you use the Setapp build, use the download-and-import steps above. You can also import `OrthoNavigation.json` with BetterTouchTool’s AI Config Assistant, or create the three MIDI triggers manually and assign these plugin operations:
 
 | Control | Operation |
 | --- | --- |
@@ -75,6 +75,6 @@ Secure fields and terminal editors such as Vim and Emacs use fallback keyboard b
 ## Files
 
 - `OrthoTextNavigation.swift` — BetterTouchTool source plugin.
-- `OrthoTextNavigation.bttpreset` — one-click-importable MIDI preset.
+- `OrthoTextNavigation.bttpreset` — BetterTouchTool preset for the three MIDI controls.
 - `OrthoNavigation.json` — MIDI trigger configuration.
 - `ortho_remote_relative_mode.py` — self-contained `uv` setup script for relative mode.
