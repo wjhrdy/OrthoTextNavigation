@@ -1,0 +1,15 @@
+.DS_Store
+._*
+*.bttaction/
+*.bttwidget/
+*.dSYM/
+.build/
+build/
+*.zwc
+*.bak
+*.backup
+.env
+.env.*
+!.env.example
+.zshrc
+.zshenv
