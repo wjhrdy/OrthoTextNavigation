@@ -1,0 +1,91 @@
+{
+  "BTTPresetName": "Ortho Text Navigation",
+  "BTTPresetUUID": "7B5ACBBE-AB8A-4B17-B9AC-EAADCC143401",
+  "BTTPresetContent": [
+    {
+      "BTTAppBundleIdentifier": "BT.G",
+      "BTTAppName": "Global",
+      "BTTAppSpecificSettings": {},
+      "BTTTriggers": [
+        {
+          "BTTTriggerConfig": {
+            "BTTMidiTriggerDeviceName": "ortho remote Bluetooth"
+          },
+          "BTTTriggerClass": "BTTTriggerTypeMIDI",
+          "BTTTriggerTypeDescriptionReadOnly": "Button 31 → Button 91",
+          "BTTMidiRepeatRate": 0,
+          "BTTTriggerType": 5191,
+          "BTTAdditionalConfiguration": "1",
+          "BTTOrder": 0,
+          "BTTMidiRepeatDelay": 0,
+          "BTTActionsToExecute": [
+            {
+              "BTTAdditionalActionData": {
+                "plugin_var_operation": "Right"
+              },
+              "BTTOrder": 1,
+              "BTTPredefinedActionType": 280,
+              "BTTPredefinedActionName": "Custom Plugin Action",
+              "BTTGenericActionConfig2": "com.whardy.ortho.textnavigation"
+            }
+          ],
+          "BTTBelongsToApp": "Global",
+          "BTTMidiTriggerIfVelocity": 1,
+          "BTTMidiTriggerValue": 1
+        },
+        {
+          "BTTTriggerConfig": {
+            "BTTMidiTriggerDeviceName": "ortho remote Bluetooth"
+          },
+          "BTTTriggerClass": "BTTTriggerTypeMIDI",
+          "BTTTriggerTypeDescriptionReadOnly": "Button 31 → Button 91",
+          "BTTMidiRepeatRate": 0,
+          "BTTTriggerType": 5191,
+          "BTTAdditionalConfiguration": "1",
+          "BTTOrder": 1,
+          "BTTMidiRepeatDelay": 0,
+          "BTTActionsToExecute": [
+            {
+              "BTTAdditionalActionData": {
+                "plugin_var_operation": "Left"
+              },
+              "BTTOrder": 1,
+              "BTTPredefinedActionType": 280,
+              "BTTGenericActionConfig2": "com.whardy.ortho.textnavigation",
+              "BTTPredefinedActionName": "Custom Plugin Action"
+            }
+          ],
+          "BTTBelongsToApp": "Global",
+          "BTTMidiTriggerIfVelocity": 1,
+          "BTTMidiTriggerValue": 127
+        },
+        {
+          "BTTTriggerConfig": {
+            "BTTMidiTriggerDeviceName": "ortho remote Bluetooth"
+          },
+          "BTTTriggerClass": "BTTTriggerTypeMIDI",
+          "BTTTriggerTypeDescriptionReadOnly": "Button 31 → Button 59",
+          "BTTTriggerType": 5159,
+          "BTTAdditionalConfiguration": "60",
+          "BTTOrder": 2,
+          "BTTMidiRepeatDelay": 0,
+          "BTTActionsToExecute": [
+            {
+              "BTTPredefinedActionType": 280,
+              "BTTOrder": 0,
+              "BTTGenericActionConfig2": "com.whardy.ortho.textnavigation",
+              "BTTPredefinedActionName": "Custom Plugin Action",
+              "BTTAdditionalActionData": {
+                "plugin_var_operation": "Cancel"
+              }
+            }
+          ],
+          "BTTBelongsToApp": "Global",
+          "BTTMidiTriggerIfVelocity": -1,
+          "BTTMidiTriggerValue": 0
+        }
+      ]
+    }
+  ],
+  "BTTPresetSnapAreas": []
+}
