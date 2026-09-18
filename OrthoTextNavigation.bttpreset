@@ -1,11 +1,15 @@
 {
   "BTTPresetName": "Ortho Text Navigation",
   "BTTPresetUUID": "7B5ACBBE-AB8A-4B17-B9AC-EAADCC143401",
+  "BTTPresetColor": "87.651150, 236.895000, 119.987318, 255.000000",
   "BTTPresetContent": [
     {
       "BTTAppBundleIdentifier": "BT.G",
       "BTTAppName": "Global",
-      "BTTAppSpecificSettings": {},
+      "BTTAppAutoInvertIcon": 1,
+      "BTTAppSpecificSettings": {
+        "BTTDisableGlobalTriggers": false
+      },
       "BTTTriggers": [
         {
           "BTTTriggerConfig": {
@@ -13,6 +17,7 @@
           },
           "BTTTriggerClass": "BTTTriggerTypeMIDI",
           "BTTTriggerTypeDescriptionReadOnly": "Button 31 → Button 91",
+          "BTTUUID": "184C3757-128B-4648-A5CA-1F5F48A15387",
           "BTTMidiRepeatRate": 0,
           "BTTTriggerType": 5191,
           "BTTAdditionalConfiguration": "1",
@@ -20,6 +25,9 @@
           "BTTMidiRepeatDelay": 0,
           "BTTActionsToExecute": [
             {
+              "BTTTriggerParentUUID": "184C3757-128B-4648-A5CA-1F5F48A15387",
+              "BTTIsPureAction": true,
+              "BTTUUID": "69ADD8D9-6715-4609-8FD9-256D4AECC7B2",
               "BTTAdditionalActionData": {
                 "plugin_var_operation": "Right"
               },
@@ -39,6 +47,7 @@
           },
           "BTTTriggerClass": "BTTTriggerTypeMIDI",
           "BTTTriggerTypeDescriptionReadOnly": "Button 31 → Button 91",
+          "BTTUUID": "254C72C0-9B46-4AE4-98B8-DA89D2C9EFE6",
           "BTTMidiRepeatRate": 0,
           "BTTTriggerType": 5191,
           "BTTAdditionalConfiguration": "1",
@@ -46,6 +55,9 @@
           "BTTMidiRepeatDelay": 0,
           "BTTActionsToExecute": [
             {
+              "BTTTriggerParentUUID": "254C72C0-9B46-4AE4-98B8-DA89D2C9EFE6",
+              "BTTIsPureAction": true,
+              "BTTUUID": "EA69607C-350E-446C-ABCA-D4A8D7939B27",
               "BTTAdditionalActionData": {
                 "plugin_var_operation": "Left"
               },
@@ -65,12 +77,16 @@
           },
           "BTTTriggerClass": "BTTTriggerTypeMIDI",
           "BTTTriggerTypeDescriptionReadOnly": "Button 31 → Button 59",
+          "BTTUUID": "6D65D131-5616-481C-A8D2-5301CE14968C",
           "BTTTriggerType": 5159,
           "BTTAdditionalConfiguration": "60",
           "BTTOrder": 2,
           "BTTMidiRepeatDelay": 0,
           "BTTActionsToExecute": [
             {
+              "BTTTriggerParentUUID": "6D65D131-5616-481C-A8D2-5301CE14968C",
+              "BTTIsPureAction": true,
+              "BTTUUID": "18D95A38-2906-41B2-888C-5A7B7D02F728",
               "BTTPredefinedActionType": 280,
               "BTTOrder": 0,
               "BTTGenericActionConfig2": "com.whardy.ortho.textnavigation",
