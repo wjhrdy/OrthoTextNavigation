@@ -1,5 +1,6 @@
 .DS_Store
-._*
+._* 
+__pycache__/
 *.bttaction/
 *.bttwidget/
 *.dSYM/

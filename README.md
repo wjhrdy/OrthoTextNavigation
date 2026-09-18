@@ -2,20 +2,30 @@
 
 A Swift action plugin and three MIDI bindings for an Ortho remote. Navigate and select text using the knob, with guarded deletion and cancellation in compatible macOS text fields.
 
+The remote must be in relative mode for the knob to work as an endless control. This repo includes a self-contained `uv` script, ported from [evnoj/ortho-remote-relative-mode](https://github.com/evnoj/ortho-remote-relative-mode).
+
 ## Files
 
 - `OrthoTextNavigation.swift`: unmodified copy of the installed plugin source.
+- `ortho_remote_relative_mode.py`: self-contained `uv` prerequisite script for the Ortho Remote.
 - `OrthoNavigation.json`: active Right, Left, and Cancel bindings; disabled legacy actions and local record IDs removed.
 - `.gitignore`: excludes macOS metadata, compiled plugins, and common local secrets/backups.
 
 ## Requirements and installation
 
-1. Install BetterTouchTool with Swift action plugin support and Apple Command Line Developer Tools (`xcode-select --install`). Grant BTT Accessibility permission and other input permissions if requested.
-2. Review the source, then copy `OrthoTextNavigation.swift` into `~/Library/Application Support/BetterTouchTool/Plugins/`. BTT detects, compiles, and loads source plugins. Follow any compilation prompts.
-3. Confirm **Ortho Text Navigation** appears under **Custom Plugin Actions**.
-4. Create/select a dedicated Ortho Text Navigation preset. Give `OrthoNavigation.json` to the BTT AI Config Assistant and ask: "Validate and import these three MIDI triggers globally into the selected preset. Preserve their plugin operations and MIDI filters. Do not create duplicates or modify existing triggers."
-5. This is a trigger JSON array, NOT a full `.bttpreset` archive; do not simply rename it. Alternatively, create three MIDI triggers manually and assign Ortho Text Navigation actions with operations Right, Left, and Cancel.
-6. Select your MIDI device and re-learn the inputs if necessary. The export matches `ortho remote Bluetooth`; MIDI controller/note identity is not guaranteed to round-trip fully through JSON. Preserve direction filters after learning.
+1. Install `uv`, BetterTouchTool with Swift action plugin support, and Apple Command Line Developer Tools (`xcode-select --install`). Grant BTT Accessibility permission and other input permissions if requested.
+2. Connect the Ortho Remote and enable relative mode (usually its Bluetooth MIDI name is `ortho remote Bluetooth`):
+
+   ```sh
+   uv run ortho_remote_relative_mode.py --midi-name="ortho remote Bluetooth" --relative
+   ```
+
+   Use `--absolute` to restore the default mode. The first run downloads `python-rtmidi`; no virtualenv or install step is needed.
+3. Review the source, then copy `OrthoTextNavigation.swift` into `~/Library/Application Support/BetterTouchTool/Plugins/`. BTT detects, compiles, and loads source plugins. Follow any compilation prompts.
+4. Confirm **Ortho Text Navigation** appears under **Custom Plugin Actions**.
+5. Create/select a dedicated Ortho Text Navigation preset. Give `OrthoNavigation.json` to the BTT AI Config Assistant and ask: "Validate and import these three MIDI triggers globally into the selected preset. Preserve their plugin operations and MIDI filters. Do not create duplicates or modify existing triggers."
+6. This is a trigger JSON array, NOT a full `.bttpreset` archive; do not simply rename it. Alternatively, create three MIDI triggers manually and assign Ortho Text Navigation actions with operations Right, Left, and Cancel.
+7. Select your MIDI device and re-learn the inputs if necessary. The export matches `ortho remote Bluetooth`; MIDI controller/note identity is not guaranteed to round-trip fully through JSON. Preserve direction filters after learning.
 
 ## Recorded MIDI bindings
 
