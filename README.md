@@ -1,76 +1,77 @@
-# Ortho Text Navigation for BetterTouchTool
+# Ortho Text Navigation
 
-A Swift action plugin and three MIDI bindings for an Ortho remote. Navigate and select text using the knob, with guarded deletion and cancellation in compatible macOS text fields.
+Use the knob on a Teenage Engineering Ortho Remote to move through text in macOS. Turn to move the cursor, hold modifier keys to select text or move by word, and use Command mode to select text for deletion.
 
-The remote must be in relative mode for the knob to work as an endless control. This repo includes a self-contained `uv` script, ported from [evnoj/ortho-remote-relative-mode](https://github.com/evnoj/ortho-remote-relative-mode).
+This is a [BetterTouchTool](https://folivora.ai/) custom action plugin for macOS.
 
-## Files
+## Requirements
 
-- `OrthoTextNavigation.swift`: unmodified copy of the installed plugin source.
-- `ortho_remote_relative_mode.py`: self-contained `uv` prerequisite script for the Ortho Remote.
-- `OrthoNavigation.json`: active Right, Left, and Cancel bindings; disabled legacy actions and local record IDs removed.
-- `.gitignore`: excludes macOS metadata, compiled plugins, and common local secrets/backups.
+- macOS
+- BetterTouchTool with Swift action plugin support
+- A Teenage Engineering Ortho Remote connected as a Bluetooth MIDI device
+- [`uv`](https://docs.astral.sh/uv/getting-started/installation/)
+- Apple Command Line Developer Tools: `xcode-select --install`
 
-## Requirements and installation
+## Setup
 
-1. Install `uv`, BetterTouchTool with Swift action plugin support, and Apple Command Line Developer Tools (`xcode-select --install`). Grant BTT Accessibility permission and other input permissions if requested.
-2. Connect the Ortho Remote and enable relative mode (usually its Bluetooth MIDI name is `ortho remote Bluetooth`):
+### 1. Put the Ortho Remote in relative mode
 
-   ```sh
-   uv run ortho_remote_relative_mode.py --midi-name="ortho remote Bluetooth" --relative
-   ```
+Relative mode makes the knob endless instead of stopping at its minimum and maximum values. With the remote connected, run:
 
-   Use `--absolute` to restore the default mode. The first run downloads `python-rtmidi`; no virtualenv or install step is needed.
-3. Review the source, then copy `OrthoTextNavigation.swift` into `~/Library/Application Support/BetterTouchTool/Plugins/`. BTT detects, compiles, and loads source plugins. Follow any compilation prompts.
-4. Confirm **Ortho Text Navigation** appears under **Custom Plugin Actions**.
-5. Create/select a dedicated Ortho Text Navigation preset. Give `OrthoNavigation.json` to the BTT AI Config Assistant and ask: "Validate and import these three MIDI triggers globally into the selected preset. Preserve their plugin operations and MIDI filters. Do not create duplicates or modify existing triggers."
-6. This is a trigger JSON array, NOT a full `.bttpreset` archive; do not simply rename it. Alternatively, create three MIDI triggers manually and assign Ortho Text Navigation actions with operations Right, Left, and Cancel.
-7. Select your MIDI device and re-learn the inputs if necessary. The export matches `ortho remote Bluetooth`; MIDI controller/note identity is not guaranteed to round-trip fully through JSON. Preserve direction filters after learning.
+```sh
+uv run ortho_remote_relative_mode.py \
+  --midi-name="ortho remote Bluetooth" \
+  --relative
+```
 
-## Recorded MIDI bindings
+The script installs its only dependency automatically. If your MIDI device has a different name, replace `ortho remote Bluetooth` with that name. Use `--absolute` to restore the remote’s default mode.
 
-| Operation | Type | Additional configuration | Value filter |
-| --- | --- | --- | --- |
-| Right | Control Change (5191) | 1 | 1; filter enabled |
-| Left | Control Change (5191) | 1 | 127; filter enabled |
-| Cancel | Note On (5159) | 60 | No velocity filter |
+The mode-setting script is based on [evnoj/ortho-remote-relative-mode](https://github.com/evnoj/ortho-remote-relative-mode).
 
-These values are copied from BTT, not a substitute for MIDI learning. Check knob-button press/release behavior, especially because Cancel has no velocity filter.
+### 2. Install the BetterTouchTool plugin
 
-## Controls in compatible text fields
+Copy `OrthoTextNavigation.swift` to:
 
-| Input | Behavior |
+```text
+~/Library/Application Support/BetterTouchTool/Plugins/
+```
+
+BetterTouchTool will compile and load the plugin. Grant Accessibility permission if macOS requests it, then confirm **Ortho Text Navigation** appears under **Custom Plugin Actions**.
+
+### 3. Add the MIDI controls
+
+Import `OrthoNavigation.json` with BetterTouchTool’s AI Config Assistant, or create three MIDI triggers manually and assign these plugin operations:
+
+| Control | Operation |
+| --- | --- |
+| Turn clockwise | Right |
+| Turn counter-clockwise | Left |
+| Press the knob | Cancel |
+
+Select the Ortho Remote as the MIDI device and re-learn the controls if BetterTouchTool does not recognize the included MIDI values.
+
+## Controls
+
+| Input | Action |
 | --- | --- |
 | Turn | Move by character |
 | Option + turn | Move by word |
 | Shift + turn | Extend selection by character |
 | Option + Shift + turn | Extend selection by word |
-| Command + turn | Select for deletion on Command release |
-| Option + Command + turn | Select by word for deletion on Command release |
-| Cancel action | Disarm deletion and restore starting cursor/selection if the saved context still matches |
+| Command + turn | Select text for deletion when Command is released |
+| Option + Command + turn | Select text by word for deletion when Command is released |
+| Cancel | Disarm deletion and restore the starting cursor or selection when possible |
 
-**Command mode deletes text when Command is released. Test with disposable text first. Invoke Cancel before releasing Command to disarm it.**
+## Safety and compatibility
 
-Rotation uses one movement per two consecutive action calls with matching direction/modifiers. Cancel is immediate. Warnings are logged without the plugin emitting a beep.
+Test with disposable text first. Command mode deletes the selected text when Command is released; press Cancel before releasing Command to disarm it.
 
-## Limitations and safety
+The plugin works best in macOS applications that expose an editable Accessibility text field. Unsupported fields fall back to ordinary Left/Right keyboard events. Changing focus, text, selection, or app can cancel a pending deletion.
 
-- Full behavior requires compatible Accessibility text fields with writable selection. Deletion additionally requires a writable selected-text attribute.
-- Focus, text, or selection changes invalidate the saved state. Key, mouse, scroll, and app-activation events can disarm deletion.
-- Unsupported fields receive ordinary Left/Right events with Option/Shift preserved. The app decides what those keys mean. Restoration and Command deletion are unavailable in fallback mode.
-- No special selection support for cmux, Zsh, Codex CLI, Vim, or Emacs is implemented. Shell configuration is not modified.
-- Secure fields are excluded from Accessibility mode, but can still receive fallback arrow keys. This is not a security boundary.
+Secure fields and terminal editors such as Vim and Emacs use fallback keyboard behavior rather than the plugin’s special selection and deletion support.
 
-## Verification
+## Files
 
-The installed source previously compiled and loaded successfully. The packaged JSON was validated by BTT; plugin parameters were checked against the exported actions and source because the validator has no typed schema for them. Fresh-machine installation and live MIDI behavior have not been tested.
-
-Test character/word movement, selection, cancellation, and Command-release deletion using disposable text. Verify changing focus disarms deletion. Test terminal fallback separately.
-
-## Sharing
-
-No shell configuration, credentials, conversation history, or unrelated BTT settings are included. Preserve plugin identifier `com.whardy.ortho.textnavigation` unless updating the bindings too.
-
-Source plugins do not need the notarization required for distributed compiled Xcode bundles. See [BTT distribution documentation](https://docs.folivora.ai/docs/plugins/xcode-bundle-distribution).
-
-No license has been chosen. Add your preferred LICENSE before publishing for reuse.
+- `OrthoTextNavigation.swift` — BetterTouchTool source plugin.
+- `OrthoNavigation.json` — MIDI trigger configuration.
+- `ortho_remote_relative_mode.py` — self-contained `uv` setup script for relative mode.
